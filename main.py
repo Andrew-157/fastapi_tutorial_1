@@ -1,20 +1,16 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-
-
-class Item(BaseModel):
-    name: str
-    description: str | None = None
-    price: float | None = None
-    tax: float | None = None
-
+from typing import Annotated
+from fastapi import FastAPI, Query
 
 app = FastAPI()
 
 
-@app.put("/items/{item_id}/")
-async def create_item(item_id: int, item: Item, q: str | None = None):
-    result = {"item_id": item_id, **item.dict()}
+@app.get("/items/")
+async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):
+    """
+    q can be not provided as it is allowed to be None and default is None,
+    but if it is provided, it should not exceed the limit og 50 characters
+    """
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
     if q:
-        result.update({"q": q})
-    return result
+        results.update({"q": q})
+    return results
