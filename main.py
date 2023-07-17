@@ -6,8 +6,9 @@ app = FastAPI()
 
 @app.get("/items/")
 async def read_items(
-        q: Annotated[str | None, Query(alias="item-query", deprecated=True)] = None):
-    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
-    if q:
-        results.update({"q": q})
-    return results
+    hidden_query: Annotated[str | None, Query(include_in_schema=False)] = None
+):
+    if hidden_query:
+        return {"hidden_query": hidden_query}
+    else:
+        return {"hidden_query": "Not found"}
