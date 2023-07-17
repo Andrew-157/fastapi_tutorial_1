@@ -7,6 +7,10 @@ from pydantic import BaseModel, Field
 
 app = FastAPI()
 
+class Image(BaseModel);
+    url: str
+    name: str
+
 
 class Item(BaseModel):
     name: str
@@ -14,6 +18,7 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
     tags: set[str] = set()
+    image: Image | None = None
 
 
 @app.put("/items/{item_id}/")
