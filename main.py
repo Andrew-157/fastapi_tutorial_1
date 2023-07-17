@@ -18,7 +18,7 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
     tags: set[str] = set()
-    image: Image | None = None
+    images: list[Image] | None = []
 
 
 @app.put("/items/{item_id}/")
