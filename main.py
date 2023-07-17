@@ -14,16 +14,14 @@ class Item(BaseModel):
     tax: float
 
 
-@app.put("/items/{item_id}")
+class User(BaseModel):
+    username: str
+    full_name: str | None = None
+
+
+@app.put("/items/{item_id}/")
 async def update_item(
-        item_id: Annotated[int, Path(
-            title="The ID of the item to get", ge=0, le=1000)],
-        q: str,
-        item: Item | None = None,
+        item_id: int, item: Item, user: User
 ):
-    results = {"item_id": item_id}
-    if q:
-        results.update({"q": q})
-    if item:
-        results.update({"item": item})
+    results = {"item_id": item_id, "item": item, "user": user}
     return results
