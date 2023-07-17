@@ -5,11 +5,7 @@ app = FastAPI()
 
 
 @app.get("/items/")
-async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):
-    """
-    q can be not provided as it is allowed to be None and default is None,
-    but if it is provided, it should not exceed the limit og 50 characters
-    """
+async def read_items(q: Annotated[str | None, Query(min_length=3, max_length=50)] = None):
     results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
     if q:
         results.update({"q": q})
