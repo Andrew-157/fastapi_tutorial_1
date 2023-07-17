@@ -2,13 +2,13 @@ from typing import Annotated
 
 
 from fastapi import FastAPI, Query, Path, Body
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, HttpUrl
 
 
 app = FastAPI()
 
 class Image(BaseModel);
-    url: str
+    url: HttpUrl
     name: str
 
 
